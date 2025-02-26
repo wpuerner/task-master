@@ -1,0 +1,103 @@
+Transform: AWS::Serverless-2016-10-31
+
+Globals:
+  Function:
+    Handler: index.handler
+    Runtime: nodejs22.x
+Resources:
+  CreateSpaceFunction:
+    Type: AWS::Serverless::Function
+    Properties:
+      CodeUri: create-space/
+      Events:
+        CreateSpace:
+          Type: Api
+          Properties:
+            Method: post
+            Path: /spaces
+    Metadata:
+      BuildMethod: esbuild
+      BuildProperties:
+        Format: esm
+        Minify: false
+        OutExtension:
+          - .js=.mjs
+        Target: "es2020"
+        Sourcemap: true
+        EntryPoints:
+          - app.ts
+  GetSpaceFunction:
+    Type: AWS::Serverless::Function
+    Properties:
+      CodeUri: get-space/
+      Events:
+        GetSpace:
+          Type: Api
+          Properties:
+            Method: get
+            Path: /spaces/{space-id}
+    Metadata:
+      BuildMethod: esbuild
+      BuildProperties:
+        Format: esm
+        Minify: false
+        OutExtension:
+          - .js=.mjs
+        Target: "es2020"
+        Sourcemap: true
+        EntryPoints:
+          - app.ts
+  CreateListFunction:
+    Type: AWS::Serverless::Function
+    Properties:
+      CodeUri: create-list/
+      Events:
+        CreateList:
+          Type: Api
+          Properties:
+            Method: post
+            Path: /spaces/{space-id}/lists
+    Metadata:
+      BuildMethod: esbuild
+      BuildProperties:
+        Format: esm
+        Minify: false
+        OutExtension:
+          - .js=.mjs
+        Target: "es2020"
+        Sourcemap: true
+        EntryPoints:
+          - app.ts
+  GetListFunction:
+    Type: AWS::Serverless::Function
+    Properties:
+      CodeUri: get-list/
+      Events:
+        GetList:
+          Type: Api
+          Properties:
+            Method: get
+            Path: /spaces/{space-id}/lists/{list-id}
+    Metadata:
+      BuildMethod: esbuild
+      BuildProperties:
+        Format: esm
+        Minify: false
+        OutExtension:
+          - .js=.mjs
+        Target: "es2020"
+        Sourcemap: true
+        EntryPoints:
+          - app.ts
+  SpaceTable:
+    Type: AWS::Serverless::SimpleTable
+    Properties:
+      TableName: task-master-spaces
+  ListTable:
+    Type: AWS::Serverless::SimpleTable
+    Properties:
+      TableName: task-master-lists
+  UserTable:
+    Type: AWS::Serverless::SimpleTable
+    Properties:
+      TableName: task-master-users
