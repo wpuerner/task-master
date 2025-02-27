@@ -1,8 +1,8 @@
-import { beforeEach, expect, jest, test } from "@jest/globals";
-import { mockClient } from "aws-sdk-client-mock";
 import { DynamoDBDocumentClient, PutCommand } from "@aws-sdk/lib-dynamodb";
-import { context, uuidPattern } from "../constants";
+import { beforeEach, expect, test } from "@jest/globals";
+import { mockClient } from "aws-sdk-client-mock";
 import "aws-sdk-client-mock-jest";
+import { context, uuidPattern } from "../constants";
 
 import { handler } from "../../src/create-space/index";
 
